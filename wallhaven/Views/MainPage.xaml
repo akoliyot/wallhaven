@@ -1,0 +1,208 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="wallhaven.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignData SampleData/SampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+
+        <!--Pivot Control-->
+        <phone:Pivot Name="MainPivot"
+                     SelectionChanged="MainPivot_SelectionChanged"
+                     Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
+            
+            <!--Pivot item one-->
+            <phone:PivotItem Name="LatestImagesPivot" Header="latest" >
+
+                <!--Double line list with text wrapping-->
+                <phone:LongListSelector Name="LatestWallpapers" 
+                                        Margin="0,0,-12,0" 
+                                        ItemsSource="{Binding Latest.WallpaperCollection}"
+                                        ItemRealized="LongListSelector_ItemRealized"
+                                        SelectionChanged="LongListSelector_SelectionChanged">
+                    
+
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Margin="0,0,0,17">
+                                <!--<TextBlock Text="{Binding LazyLoadImageUri}" 
+                                           TextWrapping="Wrap" Margin="12,-6,0,0" 
+                                           Style="{StaticResource PhoneTextSubtleStyle}"/>-->
+                                <Image Opacity="1" 
+                                       CacheMode="BitmapCache"
+                                           Source="{Binding LazyLoadImageUri}" />
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Name="RandomImagesPivot" Header="random">
+                <!--Double line list no text wrapping-->
+                <phone:LongListSelector Name="RandomWallpapers" 
+                                        Margin="0,0,-12,0" 
+                                        ItemsSource="{Binding Random.WallpaperCollection}"
+                                        ItemRealized="LongListSelector_ItemRealized"
+                                        SelectionChanged="LongListSelector_SelectionChanged">
+                    <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                            <StackPanel Margin="0,0,0,17">
+                                <!--<TextBlock Text="{Binding LazyLoadImageUri}" 
+                                           TextWrapping="Wrap" Margin="12,-6,0,0" 
+                                           Style="{StaticResource PhoneTextSubtleStyle}"/>-->
+                                    <Image Opacity="1" 
+                                           Source="{Binding LazyLoadImageUri}" />
+                                </StackPanel>
+                            </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PivotItem>
+            
+            <!--Pivot item three-->
+            <phone:PivotItem Name="SearchPivot" Header="search">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <phone:LongListSelector Name="SearchResults"
+                                            Grid.Row="0"
+                                            Margin="0,0,-12,-54"
+                                            ItemRealized="LongListSelector_ItemRealized"
+                                            ItemsSource="{Binding SearchResult.WallpaperCollection}"
+                                            SelectionChanged="LongListSelector_SelectionChanged">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,17">
+                                    <Image Opacity="1"
+                                       Source="{Binding LazyLoadImageUri}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+
+                    <TextBox Name="SearchTextBox" 
+                             Grid.Row="1"
+                             BorderThickness="0" 
+                             LostFocus="SearchTextBox_LostFocus"
+                             GotFocus="SearchTextBox_GotFocus"
+                             Margin="-22, 0, -22, -11" 
+                             KeyUp="SearchTextBox_KeyUp"
+                             TextAlignment="Center"
+                             Text="Emma" />
+
+                </Grid>
+            </phone:PivotItem>
+            
+            <phone:PivotItem Name="SettingsPivot" Header="settings">
+
+                <StackPanel Name="MainStackPanel" Orientation="Vertical">
+
+                    <TextBlock Margin="10" Text="Category" />
+                    <Grid Name="CategoryFilterGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Everytime a new filter is added, be sure to set the defaults-->
+                        <ToggleButton Name="GeneralFilter" 
+                                  Content="General"
+                                  Grid.Column="0"     
+                                  BorderThickness="0"                                  
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+                        <ToggleButton Name="AnimeFilter" 
+                                  Content="Anime"
+                                  Grid.Column="1"
+                                  BorderThickness="0"
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+                        <ToggleButton Name="PeopleFilter" 
+                                  Content="People"
+                                  Grid.Column="2"
+                                  BorderThickness="0"
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+
+
+                    </Grid>
+
+                    <TextBlock Margin="10" Text="Purity" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Everytime a new filter is added, be sure to set the defaults-->
+                        <ToggleButton Name="SFWFilter" 
+                                  Content="SFW"
+                                  Grid.Column="0"     
+                                  BorderThickness="0"
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+                        <ToggleButton Name="SketchyFilter" 
+                                  Content="Sketchy"
+                                  Grid.Column="1"
+                                  BorderThickness="0"
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+                        <ToggleButton Name="NSFWFilter" 
+                                  Content="NSFW"
+                                  Grid.Column="2"
+                                  BorderThickness="0"
+                                  Checked="Filter_Checked"
+                                  Unchecked="Filter_Unchecked"/>
+
+                    </Grid>
+
+                    <TextBlock Text="Sort By" />
+                    <toolkit:ListPicker Name="SortBy" 
+                                        SelectionChanged="ImageDisplayCriteria_SelectionChanged">
+                        <toolkit:ListPickerItem Name="Relevance" Content="Relevance" />
+                        <toolkit:ListPickerItem Name="DateAdded" Content="Date Added" />
+                        <toolkit:ListPickerItem Name="Views" Content="Views" />
+                        <toolkit:ListPickerItem Name="Favorites" Content="Favorites" />
+                    </toolkit:ListPicker>
+
+
+                    <TextBlock Text="Order By" />
+                    <toolkit:ListPicker Name="OrderBy" 
+                                        SelectionChanged="ImageDisplayCriteria_SelectionChanged">
+                        <toolkit:ListPickerItem Name="Ascending" Content="Ascending" />
+                        <toolkit:ListPickerItem Name="Descending" Content="Descending" />
+                    </toolkit:ListPicker>
+
+                </StackPanel>
+
+            </phone:PivotItem>
+            
+        </phone:Pivot>
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

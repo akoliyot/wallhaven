@@ -1,0 +1,41 @@
+﻿<vm:WallhavenModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:wallhaven.ViewModels">
+
+    <vm:WallhavenModel.Latest>
+        <vm:Wallpaper>
+            <vm:Wallpaper.WallpaperCollection>
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-26623.jpg" />
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-87078.jpg" />
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-118585.jpg" />
+            </vm:Wallpaper.WallpaperCollection>
+        </vm:Wallpaper>
+    </vm:WallhavenModel.Latest>
+
+    <vm:WallhavenModel.Random>
+        <vm:Wallpaper>
+            <vm:Wallpaper.WallpaperCollection>
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-10017.jpg" />
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-113377.jpg" />
+            </vm:Wallpaper.WallpaperCollection>
+        </vm:Wallpaper>
+    </vm:WallhavenModel.Random>
+    
+    <vm:WallhavenModel.SearchResult>
+        <vm:Wallpaper>
+            <vm:Wallpaper.WallpaperCollection>
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-26000.jpg" />
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-11829.jpg" />
+                <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-5056.jpg" />
+            </vm:Wallpaper.WallpaperCollection>
+        </vm:Wallpaper>
+    </vm:WallhavenModel.SearchResult>
+    
+    <vm:WallhavenModel.SelectedWallpaper>
+        <vm:Wallpaper LazyLoadImageUri="http://alpha.wallhaven.cc/wallpapers/thumb/small/th-6361.jpg" />        
+    </vm:WallhavenModel.SelectedWallpaper>
+    
+    
+
+</vm:WallhavenModel>
